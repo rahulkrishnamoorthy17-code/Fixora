@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light" data-bs-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Dashboard – Fixora</title>
+<meta name="description" content="Track repairs live, book new services, download invoices and manage your account — all from your Fixora dashboard.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns%3D%27http%3A//www.w3.org/2000/svg%27 viewBox%3D%270 0 100 100%27%3E%0A%3Cdefs%3E%3ClinearGradient id%3D%27g%27 x1%3D%270%25%27 y1%3D%270%25%27 x2%3D%27100%25%27 y2%3D%27100%25%27%3E%3Cstop offset%3D%270%25%27 stop-color%3D%27%2300d4ff%27/%3E%3Cstop offset%3D%27100%25%27 stop-color%3D%27%230a1128%27/%3E%3C/linearGradient%3E%3C/defs%3E%0A%3Crect width%3D%27100%27 height%3D%27100%27 rx%3D%2724%27 fill%3D%27url%28%23g%29%27/%3E%0A%3Cpath fill%3D%27%23ffffff%27 d%3D%27M36 28h32v12H50v12h16v12H50v16H36z%27/%3E%0A%3Ccircle cx%3D%2770%27 cy%3D%2774%27 r%3D%276%27 fill%3D%27%2300d4ff%27/%3E%0A%3Ccircle cx%3D%2770%27 cy%3D%2728%27 r%3D%274%27 fill%3D%27%232e6bff%27/%3E%0A%3C/svg%3E">
+<link id="bs-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="css/style.css">
+<script>(function(){try{var t=localStorage.getItem("fx-theme")||"light";var d=localStorage.getItem("fx-dir")||"ltr";document.documentElement.setAttribute("data-theme",t);document.documentElement.setAttribute("data-bs-theme",t);document.documentElement.setAttribute("dir",d);}catch(e){}})();</script>
+
+</head>
+<body data-no-booking>
+
+<div class="dash-layout">
+
+  <aside class="dash-sidebar" id="dashSidebar">
+    <a class="ds-brand" href="index.html"><span class="brand-mark"><i class="bi bi-wrench-adjustable"></i></span>Fixora</a>
+    <ul class="dash-nav">
+      <li class="nav-section">Main</li>
+      <li><a href="#overview" data-nav="overview" class="active"><i class="bi bi-speedometer2"></i>Overview</a></li>
+      <li><a href="#new" data-nav="new"><i class="bi bi-plus-circle"></i>New Repair Request</a></li>
+      <li><a href="#active" data-nav="active"><i class="bi bi-arrow-repeat"></i>Active Repairs<span class="badge-soft blue ms-auto" id="navActiveCount">2</span></a></li>
+      <li><a href="#history" data-nav="history"><i class="bi bi-clock-history"></i>Repair History</a></li>
+      <li class="nav-section">Account</li>
+      <li><a href="#invoices" data-nav="invoices"><i class="bi bi-receipt"></i>Invoices</a></li>
+      <li><a href="#addresses" data-nav="addresses"><i class="bi bi-geo-alt"></i>Saved Addresses</a></li>
+      <li><a href="#profile" data-nav="profile"><i class="bi bi-person-gear"></i>Profile</a></li>
+      <li><a href="#support" data-nav="support"><i class="bi bi-headset"></i>Support</a></li>
+      <li class="nav-section">Site</li>
+      <li><a href="index.html"><i class="bi bi-house-door"></i>Back to Website</a></li>
+      <li><a href="#" id="logoutLink"><i class="bi bi-box-arrow-left"></i>Sign Out</a></li>
+    </ul>
+    <div class="dash-user-card">
+      <span class="avatar" id="pfAvatar">JS</span>
+      <div>
+        <div class="du-name" id="duName">Jordan Smith</div>
+        <div class="du-mail" id="duMail">jordan.smith@example.com</div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="dash-backdrop" id="dashBackdrop"></div>
+
+  <div class="dash-main">
+    <div class="dash-topbar">
+      <button class="btn-icon d-lg-none" id="dsToggle" type="button" aria-label="Toggle menu"><i class="bi bi-list fs-5"></i></button>
+      <h6 class="mb-0 fw-bold" id="dashTitle">Dashboard Overview</h6>
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <button class="btn-icon" type="button" data-theme-toggle aria-label="Toggle theme"><i class="bi bi-moon-stars"></i></button>
+        <button class="btn-icon d-none d-sm-inline-flex" type="button" data-rtl-toggle aria-label="Toggle RTL"><span style="font-weight:700;font-size:.8rem">ع</span></button>
+        <a href="#new" class="btn btn-gradient btn-sm d-none d-md-inline-flex align-items-center gap-2" data-goto="new"><i class="bi bi-plus-circle"></i>New Request</a>
+      </div>
+    </div>
+
+    <div class="dash-content">
+
+      <section class="dash-section" id="sec-overview">
+        <div class="row g-4 mb-4">
+          <div class="col-sm-6 col-xl-3">
+            <div class="kpi-card"><span class="kpi-icon kpi-blue"><i class="bi bi-arrow-repeat"></i></span><div><div class="kpi-value" id="kpiActive">2</div><div class="kpi-label">Active Repairs</div></div></div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="kpi-card"><span class="kpi-icon kpi-green"><i class="bi bi-check2-circle"></i></span><div><div class="kpi-value" id="kpiDone">3</div><div class="kpi-label">Completed Repairs</div></div></div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="kpi-card"><span class="kpi-icon kpi-cyan"><i class="bi bi-cash-stack"></i></span><div><div class="kpi-value" id="kpiSpent">$284</div><div class="kpi-label">Lifetime Spend</div></div></div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="kpi-card"><span class="kpi-icon kpi-violet"><i class="bi bi-patch-check"></i></span><div><div class="kpi-value" style="font-size:1.15rem" id="kpiPlan">Fixora Care+</div><div class="kpi-label">Membership</div></div></div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="dash-card h-100">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h5 class="mb-0"><i class="bi bi-calendar2-week me-2 text-primary"></i>Next Appointment</h5>
+                <a href="#active" data-goto="active" style="font-size:.85rem">View all<i class="bi bi-arrow-right ms-1"></i></a>
+              </div>
+              <div id="ovNext"></div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="dash-card h-100">
+              <h5 class="mb-3"><i class="bi bi-activity me-2 text-primary"></i>Recent Activity</h5>
+              <ul class="list-unstyled mb-0" id="ovActivity"></ul>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="dash-card">
+              <h5 class="mb-3"><i class="bi bi-lightning-charge me-2 text-primary"></i>Quick Actions</h5>
+              <div class="d-flex flex-wrap gap-2">
+                <button class="btn btn-gradient" data-goto="new"><i class="bi bi-plus-circle me-2"></i>Book a Repair</button>
+                <button class="btn btn-outline-glow" data-goto="invoices"><i class="bi bi-receipt me-2"></i>Download Invoices</button>
+                <button class="btn btn-outline-glow" data-goto="addresses"><i class="bi bi-geo-alt me-2"></i>Manage Addresses</button>
+                <button class="btn btn-outline-glow" data-goto="support"><i class="bi bi-headset me-2"></i>Contact Support</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-section d-none" id="sec-new">
+        <div class="dash-card">
+          <div class="wizard-steps" id="wizardSteps"></div>
+
+          <form id="wizForm" novalidate>
+            <div class="wiz-pane" data-pane="1">
+              <h5 class="mb-1">What needs fixing?</h5>
+              <p style="color:var(--fx-muted)">Pick the appliance — we'll match a certified specialist.</p>
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <button type="button" class="wiz-chip" data-field="appliance" data-value="Washing Machine"><i class="bi bi-arrow-repeat"></i>Washing Machine</button>
+                <button type="button" class="wiz-chip" data-field="appliance" data-value="Refrigerator"><i class="bi bi-snow"></i>Refrigerator</button>
+                <button type="button" class="wiz-chip" data-field="appliance" data-value="Air Conditioner"><i class="bi bi-wind"></i>Air Conditioner</button>
+                <button type="button" class="wiz-chip" data-field="appliance" data-value="Microwave"><i class="bi bi-lightning-charge"></i>Microwave</button>
+                <button type="button" class="wiz-chip" data-field="appliance" data-value="Geyser / Water Heater"><i class="bi bi-thermometer-half"></i>Geyser / Water Heater</button>
+                <button type="button" class="wiz-chip" data-field="appliance" data-value="Television"><i class="bi bi-tv"></i>Television</button>
+                <button type="button" class="wiz-chip" data-field="appliance" data-value="Other"><i class="bi bi-gear"></i>Other</button>
+              </div>
+            </div>
+
+            <div class="wiz-pane d-none" data-pane="2">
+              <h5 class="mb-1">Brand &amp; Model</h5>
+              <p style="color:var(--fx-muted)">Helps us bring the right spare parts on the first visit.</p>
+              <div class="row g-3 mt-1">
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="wzBrand">Brand *</label>
+                  <select class="form-select-premium" id="wzBrand">
+                    <option value="">Select brand…</option>
+                    <option>Samsung</option><option>LG</option><option>Whirlpool</option><option>Bosch</option>
+                    <option>IFB</option><option>Godrej</option><option>Haier</option><option>Voltas</option>
+                    <option>Daikin</option><option>Panasonic</option><option>Sony</option><option>Philips</option>
+                    <option>Blue Star</option><option>Other</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="wzModel">Model Number *</label>
+                  <input type="text" class="form-control-premium" id="wzModel" placeholder="e.g. WW90T554D">
+                </div>
+              </div>
+            </div>
+
+            <div class="wiz-pane d-none" data-pane="3">
+              <h5 class="mb-1">Describe the Fault</h5>
+              <p style="color:var(--fx-muted)">What's happening? When did it start?</p>
+              <textarea class="form-control-premium mt-2" id="wzIssue" rows="4" placeholder="e.g. Drum not spinning, loud humming during cycle, started two days ago…"></textarea>
+              <div class="d-flex flex-wrap gap-2 mt-3">
+                <button type="button" class="chip" data-symptom="Not powering on">Not powering on</button>
+                <button type="button" class="chip" data-symptom="Making unusual noise">Unusual noise</button>
+                <button type="button" class="chip" data-symptom="Not cooling / heating">Not cooling/heating</button>
+                <button type="button" class="chip" data-symptom="Leaking water">Leaking water</button>
+                <button type="button" class="chip" data-symptom="Error code on display">Error code showing</button>
+              </div>
+            </div>
+
+            <div class="wiz-pane d-none" data-pane="4">
+              <h5 class="mb-1">Service Address</h5>
+              <p style="color:var(--fx-muted)">Choose a saved address or enter a new one.</p>
+              <div class="list-group list-group-flush mt-2" id="adrPickList"></div>
+              <div class="form-check mt-3">
+                <input class="form-check-input" type="radio" name="adrChoice" id="adrOther">
+                <label class="form-check-label" for="adrOther">Use a different address</label>
+              </div>
+              <div class="d-none mt-2" id="adrOtherWrap">
+                <input type="text" class="form-control-premium" id="adrOtherInput" placeholder="Street, city, ZIP code">
+              </div>
+            </div>
+
+            <div class="wiz-pane d-none" data-pane="5">
+              <h5 class="mb-1">Pick a Date &amp; Time</h5>
+              <p style="color:var(--fx-muted)">Care+ members get priority slots.</p>
+              <div class="row g-3 mt-1">
+                <div class="col-md-6">
+                  <label class="form-label-premium" for="wzDate">Preferred Date *</label>
+                  <input type="date" class="form-control-premium" id="wzDate">
+                </div>
+              </div>
+              <label class="form-label-premium mt-3">Time Slot *</label>
+              <div class="d-flex flex-wrap gap-2 mt-1">
+                <button type="button" class="wiz-chip" data-field="slot" data-value="8 AM – 11 AM"><i class="bi bi-sunrise"></i>8 AM – 11 AM</button>
+                <button type="button" class="wiz-chip" data-field="slot" data-value="11 AM – 2 PM"><i class="bi bi-sun"></i>11 AM – 2 PM</button>
+                <button type="button" class="wiz-chip" data-field="slot" data-value="2 PM – 5 PM"><i class="bi bi-sun-fill"></i>2 PM – 5 PM</button>
+                <button type="button" class="wiz-chip" data-field="slot" data-value="5 PM – 8 PM"><i class="bi bi-moon-stars"></i>5 PM – 8 PM</button>
+              </div>
+            </div>
+
+            <div class="wiz-pane d-none" data-pane="6">
+              <h5 class="mb-1">Review Your Request</h5>
+              <p style="color:var(--fx-muted)">One last look before we dispatch a technician.</p>
+              <div class="row g-3 mt-1">
+                <div class="col-md-6"><div class="review-block"><div class="rb-label">Appliance</div><div class="rb-value" id="rvAppliance">—</div></div></div>
+                <div class="col-md-6"><div class="review-block"><div class="rb-label">Brand &amp; Model</div><div class="rb-value" id="rvBrand">—</div></div></div>
+                <div class="col-12"><div class="review-block"><div class="rb-label">Reported Issue</div><div class="rb-value" id="rvIssue">—</div></div></div>
+                <div class="col-md-6"><div class="review-block"><div class="rb-label">Service Address</div><div class="rb-value" id="rvAddress">—</div></div></div>
+                <div class="col-md-6"><div class="review-block"><div class="rb-label">Schedule</div><div class="rb-value" id="rvWhen">—</div></div></div>
+              </div>
+              <div class="tip-box mt-3"><i class="bi bi-shield-check"></i><p>$39 inspection fee applies and is fully waived when you proceed with the repair. You approve the quote before any work begins.</p></div>
+            </div>
+
+            <div class="wiz-pane d-none" data-pane="7" id="wizSuccess"></div>
+
+            <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top" style="border-color:var(--fx-border)!important">
+              <button type="button" class="btn btn-outline-glow d-none" id="wizBack"><i class="bi bi-arrow-left me-2"></i>Back</button>
+              <span></span>
+              <button type="button" class="btn btn-gradient px-4" id="wizNext">Continue<i class="bi bi-arrow-right ms-2"></i></button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="dash-section d-none" id="sec-active">
+        <div id="activeList"></div>
+      </section>
+
+      <section class="dash-section d-none" id="sec-history">
+        <div id="historyList"></div>
+      </section>
+
+      <section class="dash-section d-none" id="sec-invoices">
+        <div class="dash-card">
+          <h5 class="mb-3"><i class="bi bi-receipt me-2 text-primary"></i>All Invoices</h5>
+          <div class="table-responsive">
+            <table class="table table-fx align-middle">
+              <thead><tr><th>Invoice</th><th>Date</th><th>Service</th><th>Total</th><th class="text-end">Actions</th></tr></thead>
+              <tbody id="invoiceRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-section d-none" id="sec-addresses">
+        <div id="addrFormHost">
+          <div class="row g-4" id="addressGrid"></div>
+        </div>
+      </section>
+
+      <section class="dash-section d-none" id="sec-profile">
+        <div class="row g-4">
+          <div class="col-lg-8">
+            <div class="dash-card">
+              <h5 class="mb-3"><i class="bi bi-person-gear me-2 text-primary"></i>Personal Details</h5>
+              <form id="profileForm" novalidate>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label-premium" for="pfName">Full Name</label>
+                    <input type="text" class="form-control-premium" id="pfName">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label-premium" for="pfPhone">Phone Number</label>
+                    <input type="tel" class="form-control-premium" id="pfPhone">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label-premium" for="pfEmail">Email Address</label>
+                    <input type="email" class="form-control-premium" id="pfEmail">
+                  </div>
+                  <div class="col-12 d-flex flex-wrap gap-2 align-items-center">
+                    <button type="submit" class="btn btn-gradient"><i class="bi bi-save me-2"></i>Save Changes</button>
+                    <span style="font-size:.82rem;color:var(--fx-muted)"><i class="bi bi-shield-lock me-1"></i>Password changes are disabled in this demo.</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="dash-card text-center h-100">
+              <span class="avatar lg mx-auto mb-3" id="pfAvatarBig" style="width:84px;height:84px;font-size:1.8rem;display:inline-flex">JS</span>
+              <h5 class="mb-1" id="pfCardName">Jordan Smith</h5>
+              <p style="color:var(--fx-muted);font-size:.9rem">Member since March 2024</p>
+              <span class="badge-soft violet"><i class="bi bi-patch-check me-1"></i>Fixora Care+ Member</span>
+              <hr style="border-color:var(--fx-border)">
+              <ul class="check-list text-start mb-0">
+                <li><i class="bi bi-check-circle-fill"></i>Priority dispatch</li>
+                <li><i class="bi bi-check-circle-fill"></i>Free annual inspections</li>
+                <li><i class="bi bi-check-circle-fill"></i>15% off all repairs</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-section d-none" id="sec-support">
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <div class="dash-card">
+              <h5 class="mb-3"><i class="bi bi-chat-dots me-2 text-primary"></i>Open a Ticket</h5>
+              <form id="ticketForm" novalidate>
+                <div class="mb-3">
+                  <label class="form-label-premium" for="tkSubject">Subject *</label>
+                  <input type="text" class="form-control-premium" id="tkSubject" placeholder="e.g. Reschedule request for FX-4821">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label-premium" for="tkMsg">Message *</label>
+                  <textarea class="form-control-premium" id="tkMsg" rows="4" placeholder="How can we help?"></textarea>
+                </div>
+                <button type="submit" class="btn btn-gradient w-100"><i class="bi bi-send me-2"></i>Submit Ticket</button>
+              </form>
+              <hr style="border-color:var(--fx-border)">
+              <p class="mb-1" style="font-size:.9rem"><i class="bi bi-telephone-fill me-2 text-primary"></i>+1 (800) 555-0199</p>
+              <p class="mb-0" style="font-size:.9rem"><i class="bi bi-envelope-fill me-2 text-primary"></i>help@fixora.com</p>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="dash-card h-100">
+              <h5 class="mb-3"><i class="bi bi-clock-history me-2 text-primary"></i>Your Tickets</h5>
+              <div id="ticketList"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div id="print-invoice-area"></div>
+<button class="back-to-top" type="button" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
